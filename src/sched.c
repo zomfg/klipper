@@ -315,11 +315,23 @@ sched_try_shutdown(uint_fast8_t reason)
 static jmp_buf shutdown_jmp;
 
 // Force the machine to immediately run the shutdown handlers
-void
-sched_shutdown(uint_fast8_t reason)
+static void
+_sched_shutdown(uint_fast8_t reason)
 {
     irq_disable();
     longjmp(shutdown_jmp, reason);
+}
+
+void __always_inline
+sched_shutdown(uint_fast8_t reason)
+{
+#if CONFIG_MACH_PRU
+    register uint_fast8_t r asm ("r14") = reason;
+    asm volatile("jmp %1" :: "r"(r), "i"(_sched_shutdown) : "memory");
+    __builtin_unreachable();
+#else
+    _sched_shutdown(reason);
+#endif
 }
 
 
