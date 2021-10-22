@@ -97,7 +97,7 @@ _irq_poll(void)
         in_timer_dispatch = 0;
     }
 }
-void __attribute__((optimize("O2")))
+void
 irq_poll(void)
 {
     if (read_r31() & (1 << (WAKE_PRU1_IRQ + R31_IRQ_OFFSET)))
