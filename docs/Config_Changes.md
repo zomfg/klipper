@@ -8,6 +8,13 @@ All dates in this document are approximate.
 
 ## Changes
 
+20211104: The "step pulse duration" option in "make menuconfig" has
+been removed. A new `step_pulse_duration` setting in the
+[stepper config section](Config_Reference.md#stepper) should be set
+for all steppers that need a custom pulse duration.
+
+20210929: Klipper v0.10.0 released.
+
 20210903: The default [`smooth_time`](Config_Reference.md#extruder)
 for heaters has changed to 1 second (from 2 seconds).  For most
 printers this will result in more stable temperature control.
